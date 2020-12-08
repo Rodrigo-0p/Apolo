@@ -9,11 +9,33 @@ function Login() {
 
     const { register, errors, handleSubmit } = useForm();
 
-    const onSubmit = (data,e) => {
-        console.log(data);
-        e.target.reset();
+    //enviamos los datos
+    const onSubmit = async (data,e) => {
+        try {
+            let enviarDatos = await fetch('http://localhost:3001/api/user/login', {
+                method: 'Post',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json',
+                        //'auth-token': this.token
+                },
+            });
+            const req = await enviarDatos.json()
+            if(!req.error){
+                console.log(req.data.token);
+            } else{
+                console.log(req.message);
+            }
+
+          } catch (error) {
+            console.log(error)
+          }
+
+        //console.log(data);
+        //e.target.reset();
     }
 
+    //esto lo realizamos para poder visuarizar la contraseña
     const [shown, setShown] = React.useState(false);
 
     const switchShown = () => setShown(!shown);
@@ -42,8 +64,8 @@ function Login() {
                                             <i className="user input-group-text fas fa-user-tie" id="addon1"></i>
                                         </div>
                                         <input
-                                            type="text"
-                                            name="usuario"
+                                            type="email"
+                                            name="email"
                                             id="usuario"
                                             className="form-control"
                                             placeholder="Usuario"
@@ -81,13 +103,13 @@ function Login() {
                                                         value: true,
                                                         message: 'Campo Obligatorio'
                                                     },
-                                                    maxLength: {
-                                                        value: 8,
-                                                        message: 'maximo 8 carácteres!'
-                                                    },
                                                     minLength: {
-                                                        value: 5,
-                                                        message: 'minimo 5 carácteres!'
+                                                        value: 7,
+                                                        message: 'minimo 8 carácteres!'
+                                                    },
+                                                    maxLength: {
+                                                        value: 10,
+                                                        message: 'maximo 8 carácteres!'
                                                     }
                                                 })
                                             }

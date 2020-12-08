@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 //Importamos el keySecretToken
 const tokenConfig = require('../configToken/configToken')
 
-
 const verifyToken = (req, res, next) => {
     const token = req.header('auth-token');
 

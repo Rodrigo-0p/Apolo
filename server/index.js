@@ -1,11 +1,15 @@
 const express = require('express');
-const bodyparser = require('body-parser');
 const pool = require("./conexion/conexion");
-
 const app = express();
 
-// capturar body
-app.use(express.urlencoded({ extended: false }));
+// cors
+const cors = require('cors');
+var corsOptions = {
+    origin: '*', //con el * aprobamos que todos los dominios tenga acceso al la api 
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+app.use(cors(corsOptions));app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // import routes

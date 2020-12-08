@@ -54,7 +54,7 @@ router.post('/login', async(req, res) => {
             //Generamos un token
             const token = jwt.sign({
                 nombre:existeUsuario.rows[0].nombre,
-                id: existeUsuario.rows[0].iduser
+                    id:existeUsuario.rows[0].iduser
             }, tokenConfig.token.keySecret)
 
             res.header('auth-token', token).json({
